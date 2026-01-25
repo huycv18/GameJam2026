@@ -41,7 +41,7 @@ public class UIController : EventTarget
             else
             {
                 Debug.LogWarning($"⚠️ UIController: UIType '{type}' not found in uiItems.");
-            }
+            } 
         }
     }
 

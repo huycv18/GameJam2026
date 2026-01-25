@@ -24,6 +24,7 @@ public sealed class PoolController : MonoBehaviour
             var pool = new ObjectPool(item.prefab, item.initialSize);
             _pools.Add(item.prefab.GetType(), pool);
         }
+
     }
 
     public void CreatePool(GameObject prefab, int initialSize = 2)
