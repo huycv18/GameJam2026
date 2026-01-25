@@ -5,7 +5,7 @@ public static class EventBus
 {
     private static readonly Dictionary<Enum, List<Delegate>> listeners = new();
 
-    public static void On(Enum eventType, Delegate callback)
+    public static void On<T>(Enum eventType, Action<T> callback)
     {
         if (!listeners.ContainsKey(eventType))
             listeners[eventType] = new();
@@ -13,7 +13,7 @@ public static class EventBus
         listeners[eventType].Add(callback);
     }
 
-    public static void Off(Enum eventType, Delegate callback)
+    public static void Off<T>(Enum eventType, Action<T> callback)
     {
         if (!listeners.ContainsKey(eventType))
             return;
@@ -24,30 +24,21 @@ public static class EventBus
             listeners.Remove(eventType);
     }
 
-    public static void Emit(Enum eventType, params object[] args)
+    public static void Emit<T>(Enum eventType, T arg)
     {
-        if (!listeners.TryGetValue(eventType, out var delegates))
+        if (!listeners.TryGetValue(eventType, out var list))
             return;
 
-        foreach (var callback in delegates)
+        foreach (var del in list)
         {
-            var parameters = callback.Method.GetParameters();
-            if (parameters.Length != args.Length)
-            {
-                Console.WriteLine(
-                    $"⚠️ Event '{eventType}' arg mismatch ({parameters.Length} expected, got {args.Length})"
+            if (del is Action<T> action)
+                action(arg);
+#if UNITY_EDITOR
+            else
+                UnityEngine.Debug.LogWarning(
+                    $"⚠️ Event {eventType} emit type mismatch"
                 );
-                continue;
-            }
-
-            try
-            {
-                callback.DynamicInvoke(args);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine($"⚠️ Event '{eventType}' invoke failed: {e.Message}");
-            }
+#endif
         }
     }
 }

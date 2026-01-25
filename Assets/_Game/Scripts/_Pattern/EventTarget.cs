@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class EventTarget : MonoBehaviour
 {
-    public void On(Enum eventType, Delegate callback)
+    public void On<T>(Enum eventType, Action<T> callback)
     {
         EventBus.On(eventType, callback);
     }
 
-    public void Off(Enum eventType, Delegate callback)
+    public void Off<T>(Enum eventType, Action<T> callback)
     {
         EventBus.Off(eventType, callback);
     }
 
-    protected void Emit(Enum eventType, params object[] args)
+    protected void Emit<T>(Enum eventType, T args)
     {
         EventBus.Emit(eventType, args);
     }

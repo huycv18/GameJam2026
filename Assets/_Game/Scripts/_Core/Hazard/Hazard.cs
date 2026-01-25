@@ -7,15 +7,14 @@ public abstract class Hazard : EventTarget
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        collision.TryGetComponent<Entity>(out Entity entity);
-        if (entity == null)
+        if (!collision.TryGetComponent(out IAffectable affectable))
         {
             return;
         }
-        this.OnActivate(entity);
+        this.Apply(affectable);
     }
 
-    protected virtual void OnActivate(Entity entity)
+    public virtual void Apply(IAffectable affectable)
     {
 
     }
