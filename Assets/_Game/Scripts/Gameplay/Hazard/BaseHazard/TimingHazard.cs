@@ -27,7 +27,7 @@ public class TimingHazard : Hazard
         while (true)
         {
             // 1. Trạng thái nghỉ (Cooldown)
-            damageCollider.enabled = false;
+            // damageCollider.enabled = false;
             OnDeactivate?.Invoke();
             yield return new WaitForSeconds(cooldownTime);
 
@@ -38,7 +38,7 @@ public class TimingHazard : Hazard
 
             // 3. Trạng thái kích hoạt (Active)
             // Laser: Phình to, Bật collider
-            damageCollider.enabled = true;
+            // damageCollider.enabled = true;
             OnActivate?.Invoke();
             yield return new WaitForSeconds(activeTime);
         }

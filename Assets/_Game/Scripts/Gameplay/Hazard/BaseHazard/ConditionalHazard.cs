@@ -67,7 +67,7 @@ public class ConditionalHazard : Hazard
 
             case ActionType.AppearAttack: // Cóc / Cây đuôi cáo
                 // Bật collider sát thương
-                damageCollider.enabled = true;
+                // damageCollider.enabled = true;
                 // Chạy animation trồi lên
                 // Animator.SetTrigger("Attack"); 
                 break;
