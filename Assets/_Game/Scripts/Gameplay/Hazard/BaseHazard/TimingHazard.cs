@@ -47,9 +47,11 @@ public class TimingHazard : Hazard
         }
     }
 
-    protected override void ApplyEffect(IAffectable target)
-    {
-        base.ApplyEffect(target);
-        hitVFX?.Play();
-    }
+    // protected override void ApplyEffect(IAffectable target)
+    // {
+    //     base.ApplyEffect(target);
+    //     hitVFX?.Play();
+    // }
+
+    
 }

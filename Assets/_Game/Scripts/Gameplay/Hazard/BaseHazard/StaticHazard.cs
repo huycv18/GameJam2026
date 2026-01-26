@@ -8,10 +8,10 @@ public class StaticHazard : Hazard {
     protected virtual void Reset() {
         // isInstantDeath = true; 
     }
-    protected override void ApplyEffect(IAffectable target)
-    {
-        base.ApplyEffect(target);
-        hitVFX?.Play();
-        //TODO: Sound effect
-    }
+    // protected override void ApplyEffect(IAffectable target)
+    // {
+    //     base.ApplyEffect(target);
+    //     hitVFX?.Play();
+    //     //TODO: Sound effect
+    // }
 }
