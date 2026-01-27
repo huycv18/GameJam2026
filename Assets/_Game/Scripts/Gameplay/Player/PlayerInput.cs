@@ -22,6 +22,7 @@ public class PlayerInput : EventTarget
         _inputActions.GamePlay.Move.canceled += OnMoveCanceled;
         _inputActions.GamePlay.Jump.performed += OnJumpPerformed;
         _inputActions.GamePlay.Dash.performed += OnDashPerformed;
+        _inputActions.GamePlay.Skill.performed += OnSkillPerformed;
     }
 
     private void OnDisable()
@@ -30,6 +31,7 @@ public class PlayerInput : EventTarget
         _inputActions.GamePlay.Move.canceled -= OnMoveCanceled;
         _inputActions.GamePlay.Jump.performed -= OnJumpPerformed;
         _inputActions.GamePlay.Dash.performed -= OnDashPerformed;
+        _inputActions.GamePlay.Skill.performed -= OnSkillPerformed;
         
         _inputActions.GamePlay.Disable();
     }
@@ -67,5 +69,10 @@ public class PlayerInput : EventTarget
     private void OnDashPerformed(InputAction.CallbackContext context)
     {
         this.Emit<bool>(PlayerInputType.Dash, true);
+    }
+
+    private void OnSkillPerformed(InputAction.CallbackContext context)
+    {
+        this.Emit<bool>(PlayerInputType.Skill, true);
     }
 }
