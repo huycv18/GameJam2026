@@ -137,10 +137,9 @@ MonoBehaviour:
     m_Bits: 8
   rotateTowardsPlayer: 1
   chargeDistance: 3
-  chargeSpeed: 6
-  flyHeight: 1
-  maxChargeDistance: 10
-  maxChargeTime: 2
+  chargeSpeed: 8
+  maxChargeDistance: 9
+  maxChargeTime: 1
 --- !u!58 &4653692370904843382
 CircleCollider2D:
   m_ObjectHideFlags: 0
