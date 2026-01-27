@@ -47,6 +47,46 @@ public class PlayerConfig : ScriptableObject
     [Tooltip("Can the player dash while in the air?")]
     [SerializeField] private bool canDashInAir = true;
 
+    [Header("Teleport Marker Settings")]
+    [Header("Flight Settings")]
+    [Tooltip("Initial throw speed")]
+    [SerializeField] private float markerThrowSpeed = 12f;
+    
+    [Tooltip("Throw angle offset from facing direction (-90 to 90)")]
+    [SerializeField] private float markerThrowAngle = 0f;
+    
+    [Tooltip("Flight force mode: -1 = straight, >0 = parabol multiplier")]
+    [SerializeField] private float markerFlightForce = -1f;
+    
+    [Tooltip("Max flight distance for straight mode")]
+    [SerializeField] private float markerMaxDistance = 10f;
+    
+    [Tooltip("Acceleration during flight")]
+    [SerializeField] private float markerAcceleration = 8f;
+    
+    [Tooltip("Max speed during flight")]
+    [SerializeField] private float markerMaxSpeed = 20f;
+    
+    [Header("Timing")]
+    [Tooltip("Time window to teleport after marker lands (seconds)")]
+    [SerializeField] private float teleportWindowTime = 3f;
+    
+    [Tooltip("Marker lifetime after landing (seconds)")]
+    [SerializeField] private float markerLifetime = 6f;
+    
+    [Tooltip("Cooldown after teleport (seconds)")]
+    [SerializeField] private float teleportCooldown = 9f;
+    
+    [Header("Teleport")]
+    [Tooltip("Pickup radius for collecting marker")]
+    [SerializeField] private float markerPickupRadius = 0.5f;
+    
+    [Tooltip("Vertical offset if teleport position blocked")]
+    [SerializeField] private float teleportOffsetY = 0.5f;
+    
+    [Tooltip("Max attempts to find valid teleport position")]
+    [SerializeField] private int teleportMaxAttempts = 5;
+
     [Header("Physics Settings")]
     [Tooltip("Distance to check for ground below player")]
     [SerializeField] private float groundCheckDistance = 0.1f;
@@ -72,6 +112,19 @@ public class PlayerConfig : ScriptableObject
     public float DashDuration => dashDuration;
     public float DashCooldown => dashCooldown;
     public bool CanDashInAir => canDashInAir;
+    
+    public float MarkerThrowSpeed => markerThrowSpeed;
+    public float MarkerThrowAngle => markerThrowAngle;
+    public float MarkerFlightForce => markerFlightForce;
+    public float MarkerMaxDistance => markerMaxDistance;
+    public float MarkerAcceleration => markerAcceleration;
+    public float MarkerMaxSpeed => markerMaxSpeed;
+    public float TeleportWindowTime => teleportWindowTime;
+    public float MarkerLifetime => markerLifetime;
+    public float TeleportCooldown => teleportCooldown;
+    public float MarkerPickupRadius => markerPickupRadius;
+    public float TeleportOffsetY => teleportOffsetY;
+    public int TeleportMaxAttempts => teleportMaxAttempts;
     
     public float GroundCheckDistance => groundCheckDistance;
     public Vector2 GroundCheckOffset => groundCheckOffset;
