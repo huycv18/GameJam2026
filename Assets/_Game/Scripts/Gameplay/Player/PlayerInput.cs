@@ -22,7 +22,7 @@ public class PlayerInput : EventTarget
         _inputActions.GamePlay.Move.canceled += OnMoveCanceled;
         _inputActions.GamePlay.Jump.performed += OnJumpPerformed;
         _inputActions.GamePlay.Dash.performed += OnDashPerformed;
-        _inputActions.GamePlay.Skill.performed += OnSkillPerformed;
+        _inputActions.GamePlay.Skill.started += OnSkillPerformed;
     }
 
     private void OnDisable()
@@ -31,7 +31,7 @@ public class PlayerInput : EventTarget
         _inputActions.GamePlay.Move.canceled -= OnMoveCanceled;
         _inputActions.GamePlay.Jump.performed -= OnJumpPerformed;
         _inputActions.GamePlay.Dash.performed -= OnDashPerformed;
-        _inputActions.GamePlay.Skill.performed -= OnSkillPerformed;
+        _inputActions.GamePlay.Skill.started -= OnSkillPerformed;
         
         _inputActions.GamePlay.Disable();
     }

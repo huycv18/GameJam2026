@@ -62,13 +62,26 @@ public class PlayerTeleportMarker : MonoBehaviour
     {
         if (!pressed) return;
         
+        Debug.Log($"[TELEPORT] Skill pressed - ActiveMarker: {_activeMarker != null}, CanUseSkill: {CanUseSkill}, CanTeleport: {CanTeleport}");
+        
         if (_activeMarker == null && CanUseSkill)
         {
+            Debug.Log($"[TELEPORT] Throwing marker...");
             ThrowMarker();
+            
+            // Start teleport window immediately
+            _canTeleport = true;
+            _teleportWindowTimer = config.TeleportWindowTime;
+            Debug.Log($"[TELEPORT] Teleport window started - CanTeleport: {_canTeleport}, Timer: {_teleportWindowTimer}");
         }
         else if (CanTeleport)
         {
+            Debug.Log($"[TELEPORT] Teleporting to marker at {_activeMarker.Position}");
             TeleportToMarker();
+        }
+        else
+        {
+            Debug.LogWarning($"[TELEPORT] Cannot use skill! ActiveMarker: {_activeMarker != null}, CanTeleport: {_canTeleport}, Cooldown: {_cooldownTimer:F2}");
         }
     }
     
@@ -156,23 +169,70 @@ public class PlayerTeleportMarker : MonoBehaviour
             return targetPos;
         }
         
+        Vector2 currentPos = transform.position;
+        Vector2 direction = (targetPos - currentPos).normalized;
+        float distance = Vector2.Distance(currentPos, targetPos);
+        
+        float playerRadius = Mathf.Max(
+            playerCollider.bounds.extents.x,
+            playerCollider.bounds.extents.y
+        );
+        
+        // Strategy 1: Raycast from player to marker to find obstruction
+        RaycastHit2D hit = Physics2D.CircleCast(
+            currentPos,
+            playerRadius * 0.9f,
+            direction,
+            distance,
+            config.GroundLayer
+        );
+        
+        if (hit.collider != null)
+        {
+            // Hit obstruction - teleport just before it
+            Vector2 positionBeforeWall = hit.point - direction * (playerRadius + 0.1f);
+            
+            if (!IsPositionBlocked(positionBeforeWall, playerCollider))
+            {
+                return positionBeforeWall;
+            }
+        }
+        
+        // Strategy 2: Try exact marker position
         if (!IsPositionBlocked(targetPos, playerCollider))
         {
             return targetPos;
         }
         
-        for (int i = 1; i <= config.TeleportMaxAttempts; i++)
+        // Strategy 3: Try positions around marker (spiral search)
+        Vector2[] offsets = new Vector2[]
         {
-            Vector2 offsetPos = targetPos + Vector2.up * (config.TeleportOffsetY * i);
-            
-            if (!IsPositionBlocked(offsetPos, playerCollider))
+            Vector2.up * config.TeleportOffsetY,
+            Vector2.right * config.TeleportOffsetY,
+            Vector2.left * config.TeleportOffsetY,
+            Vector2.down * config.TeleportOffsetY * 0.5f,
+            new Vector2(1, 1).normalized * config.TeleportOffsetY,
+            new Vector2(-1, 1).normalized * config.TeleportOffsetY,
+            new Vector2(1, -1).normalized * config.TeleportOffsetY,
+            new Vector2(-1, -1).normalized * config.TeleportOffsetY
+        };
+        
+        for (int mult = 1; mult <= config.TeleportMaxAttempts; mult++)
+        {
+            foreach (Vector2 offset in offsets)
             {
-                return offsetPos;
+                Vector2 testPos = targetPos + offset * mult;
+                
+                if (!IsPositionBlocked(testPos, playerCollider))
+                {
+                    return testPos;
+                }
             }
         }
         
-        Debug.LogWarning("Cannot find valid teleport position, staying at current position!");
-        return transform.position;
+        // Strategy 4: Fallback - stay at current position
+        Debug.LogWarning("Cannot find valid teleport position, staying in place!");
+        return currentPos;
     }
     
     private bool IsPositionBlocked(Vector2 pos, Collider2D playerCollider)
@@ -182,7 +242,7 @@ public class PlayerTeleportMarker : MonoBehaviour
             playerCollider.bounds.extents.y
         );
         
-        Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, checkRadius);
+        Collider2D[] overlaps = Physics2D.OverlapCircleAll(pos, checkRadius * 0.9f);
         
         foreach (var overlap in overlaps)
         {
