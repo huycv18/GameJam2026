@@ -62,26 +62,15 @@ public class PlayerTeleportMarker : MonoBehaviour
     {
         if (!pressed) return;
         
-        Debug.Log($"[TELEPORT] Skill pressed - ActiveMarker: {_activeMarker != null}, CanUseSkill: {CanUseSkill}, CanTeleport: {CanTeleport}");
-        
         if (_activeMarker == null && CanUseSkill)
         {
-            Debug.Log($"[TELEPORT] Throwing marker...");
             ThrowMarker();
-            
-            // Start teleport window immediately
             _canTeleport = true;
             _teleportWindowTimer = config.TeleportWindowTime;
-            Debug.Log($"[TELEPORT] Teleport window started - CanTeleport: {_canTeleport}, Timer: {_teleportWindowTimer}");
         }
         else if (CanTeleport)
         {
-            Debug.Log($"[TELEPORT] Teleporting to marker at {_activeMarker.Position}");
             TeleportToMarker();
-        }
-        else
-        {
-            Debug.LogWarning($"[TELEPORT] Cannot use skill! ActiveMarker: {_activeMarker != null}, CanTeleport: {_canTeleport}, Cooldown: {_cooldownTimer:F2}");
         }
     }
     

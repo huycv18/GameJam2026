@@ -82,10 +82,8 @@ public class TeleportMarker : MonoBehaviour
     
     void FixedUpdate()
     {
-        // Ensure no custom physics when landed
         if (_state == MarkerState.Landed)
         {
-            // Let Unity physics fully control
             return;
         }
     }
@@ -174,9 +172,7 @@ public class TeleportMarker : MonoBehaviour
         _state = MarkerState.Landed;
         _lifetimeTimer = config.MarkerLifetime;
         
-        // STOP all custom flight logic - let Unity physics take over
         _rb.gravityScale = 1f;
-        // Do NOT set velocity to zero - let physics handle bounce/slide
         
         OnLanded?.Invoke(this);
     }
