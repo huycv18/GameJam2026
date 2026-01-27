@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 168538274}
   - component: {fileID: 168538278}
   - component: {fileID: 168538279}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -694,9 +694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7567e1f239f23194697f11361280919a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isInstantDeath: 0
-  damageCollider: {fileID: 0}
-  hitVFX: {fileID: 0}
 --- !u!1 &1273845407
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,7 +704,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1273845408}
   - component: {fileID: 1273845409}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
