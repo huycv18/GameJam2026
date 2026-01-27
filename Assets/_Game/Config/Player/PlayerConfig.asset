@@ -25,6 +25,18 @@ MonoBehaviour:
   dashDuration: 0.2
   dashCooldown: 0.3
   canDashInAir: 1
+  markerThrowSpeed: 12
+  markerThrowAngle: 0
+  markerFlightForce: -1
+  markerMaxDistance: 10
+  markerAcceleration: 8
+  markerMaxSpeed: 20
+  teleportWindowTime: 3
+  markerLifetime: 6
+  teleportCooldown: 9
+  markerPickupRadius: 0.5
+  teleportOffsetY: 0.5
+  teleportMaxAttempts: 5
   groundCheckDistance: 0.1
   groundCheckOffset: {x: 0, y: -0.5}
   groundLayer:
