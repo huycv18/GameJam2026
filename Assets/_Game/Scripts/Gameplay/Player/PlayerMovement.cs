@@ -90,7 +90,6 @@ public class PlayerMovement : MonoBehaviour
 
         _currentSpeed = Mathf.MoveTowards(_currentSpeed, _targetSpeed, accelerationRate * Time.fixedDeltaTime);
 
-        // Only update horizontal velocity, preserve vertical velocity for jump
         _rb.velocity = new Vector2(_currentSpeed, _rb.velocity.y);
     }
 
@@ -98,8 +97,17 @@ public class PlayerMovement : MonoBehaviour
     {
         if (config == null) return;
 
-        Vector2 rayOrigin = (Vector2)transform.position + config.GroundCheckOffset;
-        RaycastHit2D hit = Physics2D.Raycast(rayOrigin, Vector2.down, config.GroundCheckDistance, config.GroundLayer);
+        Vector2 boxOrigin = (Vector2)transform.position + config.GroundCheckOffset;
+        Vector2 boxSize = new Vector2(0.8f, 0.8f);
+        
+        RaycastHit2D hit = Physics2D.BoxCast(
+            boxOrigin, 
+            boxSize, 
+            0f, 
+            Vector2.down, 
+            config.GroundCheckDistance, 
+            config.GroundLayer
+        );
         
         _isGrounded = hit.collider != null;
     }

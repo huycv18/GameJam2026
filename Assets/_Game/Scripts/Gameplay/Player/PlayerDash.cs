@@ -16,9 +16,10 @@ public class PlayerDash : MonoBehaviour
     private float _dashCooldownTimer;
     private Vector2 _dashDirection;
     private float _originalGravityScale;
+    private bool _hasLandedSinceDash = true;
 
     public bool IsDashing => _isDashing;
-    public bool CanDash => _dashCooldownTimer <= 0f && (!_isDashing);
+    public bool CanDash => _dashCooldownTimer <= 0f && (!_isDashing) && _hasLandedSinceDash;
     public float DashCooldownPercent => Mathf.Clamp01(1f - (_dashCooldownTimer / config.DashCooldown));
 
     void Awake()
@@ -48,6 +49,12 @@ public class PlayerDash : MonoBehaviour
     {
         UpdateDashState();
         UpdateCooldown();
+        
+        // Track landing after dash
+        if (_movement.IsGrounded && !_isDashing)
+        {
+            _hasLandedSinceDash = true;
+        }
     }
 
     private void OnDashInput(bool pressed)
@@ -80,6 +87,7 @@ public class PlayerDash : MonoBehaviour
         _isDashing = true;
         _dashTimer = config.DashDuration;
         _dashCooldownTimer = config.DashCooldown;
+        _hasLandedSinceDash = false;
         
         _dashDirection = new Vector2(_movement.FacingDirection, 0f).normalized;
         
