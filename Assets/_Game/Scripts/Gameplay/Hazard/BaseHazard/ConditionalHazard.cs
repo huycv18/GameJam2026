@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class ConditionalHazard : Hazard
+public class ConditionalHazard : Hazard
 {
     [Header("Conditional Settings")]
     [Tooltip("Thời gian chờ từ lúc phát hiện Player đến lúc bẫy hoạt động")]
@@ -20,6 +20,7 @@ public abstract class ConditionalHazard : Hazard
     
     [Tooltip("Gọi khi kết thúc đếm ngược (VD: Phát âm thanh tách/gãy)")]
     public UnityEvent OnActionExecuted;
+    public UnityEvent OnReset;
 
     protected bool isTriggered = false;
     protected Coroutine triggerCoroutine;
@@ -70,12 +71,16 @@ public abstract class ConditionalHazard : Hazard
     /// <summary>
     /// Hành động cụ thể của từng loại bẫy (Rơi, Trồi lên, Sập cầu...)
     /// </summary>
-    protected abstract void PerformHazardAction();
+    protected virtual void PerformHazardAction()
+    {
+        // Ghi đè trong các lớp con
+    }
 
     // Reset lại bẫy nếu cần
     public virtual void ResetHazard()
     {
         isTriggered = false;
-        // Logic reset vị trí/trạng thái sẽ do class con tự xử lý
+        OnReset?.Invoke();
+        if (triggerCoroutine != null) StopCoroutine(triggerCoroutine);
     }
 }
