@@ -10,7 +10,7 @@ namespace _Game.Scripts.Tool
         [SerializeField] private MapDatabase mapDatabase;
         
         [Header("Map ID to Load")]
-        [SerializeField] private int mapID = 1;
+        [SerializeField] private String mapID = 1;
         
         [Header("Settings")]
         [SerializeField] private Transform spawnPoint;
@@ -18,7 +18,7 @@ namespace _Game.Scripts.Tool
         [SerializeField] private bool showDebugInfo = true;
         
         private GameObject currentMapInstance;
-        private int currentLoadedMapID = -1;
+        private String currentLoadedMapID = -1;
         
         private void Start()
         {
@@ -93,12 +93,12 @@ namespace _Game.Scripts.Tool
             }
         }
         
-        public void SetMapID(int id)
+        public void SetMapID(String id)
         {
             mapID = id;
         }
         
-        public void SetAndLoadMap(int id)
+        public void SetAndLoadMap(String id)
         {
             mapID = id;
             LoadMap();

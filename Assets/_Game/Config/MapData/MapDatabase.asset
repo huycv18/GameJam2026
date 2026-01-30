@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: MapDatabase
   m_EditorClassIdentifier: 
   mapPrefabs:
-  - {fileID: 2999308956871290996, guid: d874898ad71bcdb478b8bd97f9f90ec1, type: 3}
-  - {fileID: 2999308956871290996, guid: 6e378bce375b79d4d823a821eb771c59, type: 3}
-  - {fileID: 2999308956871290996, guid: a47fa91eefa59b842ae2072b7464877f, type: 3}
+  - {fileID: 5025644547126719497, guid: 124743c1548244343b06a05a229f8862, type: 3}
+  - {fileID: 5025644547126719497, guid: d5e829a4920cbc147950e2138a2ae4c4, type: 3}
+  - {fileID: 5025644547126719497, guid: 4d2cb62195bd44949b4fa8193a512945, type: 3}
+  - {fileID: 5025644547126719497, guid: 882c43cfa5f99224ab091b50e1e7f77b, type: 3}
+  - {fileID: 5025644547126719497, guid: f4e9d05e01c14a045b902ec52240d8ca, type: 3}
